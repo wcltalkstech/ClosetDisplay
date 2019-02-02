@@ -4,6 +4,7 @@ SYSTEM_MODE(MANUAL);
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
 
+#define DATA_IS_OLD 10000
 #define OLED_RESET D4
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -48,6 +49,12 @@ void setup() {
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  // The core of your code will likely live here.
-
+  delta = millis() - timeOfLastUpdate;
+  if (delta > DATA_IS_OLD) {
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(90,0);
+    display.println("OLD");
+    display.display();
+  }
 }
